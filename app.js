@@ -25,15 +25,20 @@ app.use(session({
     cookie: { maxAge: 1000 * 60 * 60 * 24 }
 }));
 
+// Route trang chủ - Tự động chuyển hướng sang /books để tránh lỗi Cannot GET /
+app.get('/', (req, res) => {
+    res.redirect('/books');
+});
+
 // Xem danh sách (Dùng tài khoản ĐỌC)
 app.get('/books', async (req, res) => {
     try {
         const books = await BookRead.find({});
         res.render('books', { 
             books, 
-            fullName: "Nguyễn Văn A", 
-            mssv: "B21DCCN123", 
-            vatPercent: "9%" // Chữ số cuối (3) + 6 = 9%
+            fullName: "Mỹ Lệ", 
+            mssv: "23IT140", 
+            vatPercent: "6%" // Chữ số cuối (0) + 6 = 6%
         });
     } catch (error) {
         res.status(500).send(error.message);
@@ -45,13 +50,13 @@ app.post('/books/add', async (req, res) => {
     try {
         const { productId, name, priceBeforeTax } = req.body;
 
-        // Bộ lọc: Mã sản phẩm bắt buộc bắt đầu bằng 3 số cuối MSSV (123)
-        if (!productId || !productId.startsWith('123')) {
-            return res.status(400).send("Lỗi: Mã sản phẩm phải bắt đầu bằng 3 số cuối MSSV (123).");
+        // Bộ lọc: Mã sản phẩm bắt buộc bắt đầu bằng phần đuôi MSSV (140)
+        if (!productId || !productId.startsWith('140')) {
+            return res.status(400).send("Lỗi: Mã sản phẩm phải bắt đầu bằng phần đuôi MSSV (140).");
         }
 
-        // Thuế suất động VAT = 9% (Hệ số 1.09)
-        const vatRate = 0.09;
+        // Thuế suất động VAT = 6% (Hệ số 1.06 dựa theo chữ số cuối 0)
+        const vatRate = 0.06;
         const priceAfterTax = Number(priceBeforeTax) * (1 + vatRate);
 
         const newBook = new BookWrite({
