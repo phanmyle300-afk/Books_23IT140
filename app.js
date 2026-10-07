@@ -13,7 +13,6 @@ app.set('views', './views');
 
 app.use(express.urlencoded({ extended: true }));
 
-// Stateless Session lưu trực tiếp xuống MongoDB Atlas (Không lưu RAM)
 app.use(session({
     secret: process.env.SESSION_SECRET || 'secret_key',
     resave: false,
@@ -25,38 +24,35 @@ app.use(session({
     cookie: { maxAge: 1000 * 60 * 60 * 24 }
 }));
 
-// Route trang chủ - Tự động chuyển hướng sang /books để tránh lỗi Cannot GET /
 app.get('/', (req, res) => {
     res.redirect('/books');
 });
 
-// Xem danh sách (Dùng tài khoản ĐỌC)
 app.get('/books', async (req, res) => {
     try {
-        const books = await BookRead.find({});
+        // Thêm .lean() ở đây để Handlebars đọc được dữ liệu hiển thị lên bảng
+        const books = await BookRead.find({}).lean();
+        
         res.render('books', { 
             books, 
             fullName: "Mỹ Lệ", 
             mssv: "23IT140", 
-            vatPercent: "6%" // Chữ số cuối (0) + 6 = 6%
+            vatPercent: "4%" 
         });
     } catch (error) {
         res.status(500).send(error.message);
     }
 });
 
-// Thêm mới sách (Dùng tài khoản GHI)
 app.post('/books/add', async (req, res) => {
     try {
         const { productId, name, priceBeforeTax } = req.body;
 
-        // Bộ lọc: Mã sản phẩm bắt buộc bắt đầu bằng phần đuôi MSSV (140)
         if (!productId || !productId.startsWith('140')) {
-            return res.status(400).send("Lỗi: Mã sản phẩm phải bắt đầu bằng phần đuôi MSSV (140).");
+            return res.status(400).send("Lỗi: Mã sản phẩm phải bắt đầu bằng 140.");
         }
 
-        // Thuế suất động VAT = 6% (Hệ số 1.06 dựa theo chữ số cuối 0)
-        const vatRate = 0.06;
+        const vatRate = 0.04;
         const priceAfterTax = Number(priceBeforeTax) * (1 + vatRate);
 
         const newBook = new BookWrite({

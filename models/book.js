@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 
-// Kết nối dùng cho quyền ĐỌC
+// Kết nối dùng cho quyền đọc 
 const readConnection = mongoose.createConnection(process.env.MONGODB_READ_URI);
-// Kết nối dùng cho quyền GHI
+// Kết nối dùng cho quyền ghi
 const writeConnection = mongoose.createConnection(process.env.MONGODB_WRITE_URI);
 
 const bookSchema = new mongoose.Schema({

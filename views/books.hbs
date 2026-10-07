@@ -4,18 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quản Lý Sách - {{mssv}}</title>
-    <!-- Nhúng Bootstrap 5 CDN để làm đẹp giao diện -->
+    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body class="bg-light">
     <div class="container py-5">
-        <!-- Tiêu đề trang -->
+        
         <div class="text-center mb-5">
-            <h1 class="text-primary fw-bold">📚 Hệ Thống Quản Lý Sách Trên Mây</h1>
+            <h1 class="text-primary fw-bold">📚 Hệ Thống Quản Lý Sách</h1>
             <p class="text-muted">Đám mây phân tán - MongoDB Atlas Multi-Connection & Stateless Session</p>
         </div>
 
-        <!-- Form Thêm Mới Sách -->
+        
         <div class="card shadow-sm mb-5 border-0">
             <div class="card-header bg-primary text-white fw-semibold py-3">
                 ➕ Thêm Sách Mới (Sử dụng Tài khoản Ghi)
@@ -41,7 +41,7 @@
             </div>
         </div>
 
-        <!-- Bảng Hiển Thị Danh Sách Sách -->
+        
         <div class="card shadow-sm border-0">
             <div class="card-header bg-dark text-white fw-semibold py-3 d-flex justify-content-between align-items-center">
                 <span>📖 Danh Sách Sách Hiện Có (Sử dụng Tài khoản Đọc)</span>
@@ -76,7 +76,7 @@
             </div>
         </div>
 
-        <!-- Footer bắt buộc theo yêu cầu đồ án -->
+        
         <footer class="text-center mt-5 pt-4 border-top text-secondary">
             <p class="mb-1">Họ và tên sinh viên: <strong class="text-dark">{{fullName}}</strong> | Mã số sinh viên (MSSV): <strong class="text-dark">{{mssv}}</strong></p>
             <p class="mb-0">Thuế suất VAT cấu hình: <span class="badge bg-warning text-dark px-2 py-1">{{vatPercent}}</span></p>
