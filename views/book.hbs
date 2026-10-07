@@ -1,0 +1,14 @@
+<h2>Quản Lý Sách</h2>
+<form action="/books/add" method="POST">
+    <input type="text" name="productId" placeholder="Mã sản phẩm (Bắt đầu 123...)" required>
+    <input type="text" name="name" placeholder="Tên sách" required>
+    <input type="number" name="priceBeforeTax" placeholder="Giá trước thuế" required>
+    <button type="submit">Thêm Sách</button>
+</form>
+<hr>
+<table border="1" cellpadding="6">
+    <tr><th>Mã SP</th><th>Tên sách</th><th>Giá trước thuế</th><th>Giá sau thuế (VAT 9%)</th></tr>
+    {{#each books}}
+    <tr><td>{{this.productId}}</td><td>{{this.name}}</td><td>{{this.priceBeforeTax}}</td><td>{{this.priceAfterTax}}</td></tr>
+    {{/each}}
+</table>
